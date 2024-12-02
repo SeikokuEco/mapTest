@@ -1,0 +1,26 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.dropdown-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+select {
+    padding: 10px;
+    margin: 10px;
+    font-size: 16px;
+}
+
+.map {
+    width: 600px;
+    height: 450px;
+    border: 1px solid #ccc;
+}
