@@ -10,16 +10,24 @@ body {
 .dropdown-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
+    width: 800px;
+    height: 500px;
 }
 
 select {
+    position: relative;
+    left: 0px;
+    top: 20%;
     padding: 10px;
     margin: 10px;
     font-size: 16px;
 }
 
 #map {
+    position: absolute;
+    right: 650px;
+    bottom: 30%;
     width: 600px;
     height: 450px;
     border: 1px solid #ccc;
@@ -29,6 +37,9 @@ select {
 #goToPageButton {
     width: 50px;
     height: 50px;
+    position: relative;
+    left: 75px;
+    top: 20%;
     
 }
 
