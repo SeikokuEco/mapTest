@@ -1,6 +1,8 @@
+// some variable delcarations
 let map;
 let view;
 
+// lots of supported countries -> missing a lot just proof of concept
 const data = {
     continents: ['Africa', 'Asia', 'Europe', 'North America', 'South America', 'Oceania'],
     countries: {
@@ -979,12 +981,12 @@ const data = {
 };
 
 document.addEventListener('DOMContentLoaded', function() {
-    view = new ol.View({
-        center: ol.proj.fromLonLat([-74.0060, 40.7128]), // Default to New York
-        zoom: 4
+    view = new ol.View({ // creating the view of the map
+        center: ol.proj.fromLonLat([10.9813, 13.1819]), // default to hopefully around the center of the map
+        zoom: 1.2
     });
 
-    map = new ol.Map({
+    map = new ol.Map({ // create new map object basically
         target: 'map',
         layers: [
             new ol.layer.Tile({
@@ -994,13 +996,27 @@ document.addEventListener('DOMContentLoaded', function() {
         view: view
     });
 
-    populateDropdown('continent-dropdown', data.continents);
-    updateMap(); // Initial map load
+    // make the first dropdown active
+    populateDropdown('continent-dropdown', data.continents, "Select Continent");
+    populateDropdown('country-dropdown', [], "Select Country");
+    populateDropdown('state-dropdown', [], "Select State/Reigon");
+    populateDropdown('city-dropdown', [], "Select City");
+    updateMap(); // start the map and load it in
 });
 
-function populateDropdown(id, options) {
+// populate the dropdown menu function
+function populateDropdown(id, options, placeholderText) {
     const dropdown = document.getElementById(id);
     dropdown.innerHTML = '';
+
+    // making a blank option
+    const blankOption = document.createElement("option");
+    blankOption.value = ''; // setting valuue to null
+    blankOption.text = placeholderText;
+    blankOption.selected = true; // set blank = default
+    // dropdown.insertBefore(blankOption, dropdown.firstChild);
+    dropdown.appendChild(blankOption);
+    
     options.forEach(option => {
         const opt = document.createElement('option');
         opt.value = option;
@@ -1009,29 +1025,81 @@ function populateDropdown(id, options) {
     });
 }
 
+// reordered the functions 
+function updateLink() {
+    // encoded to accomodate for spaces and special characters
+    const continent = encodeURIComponent(document.getElementById('continent-dropdown').value);
+    const country = encodeURIComponent(document.getElementById('country-dropdown').value);
+    const state = encodeURIComponent(document.getElementById('state-dropdown').value);
+    const city = encodeURIComponent(document.getElementById('city-dropdown').value);
+    let url = null;
+
+    console.log("Dropdown Values:", { continent, country, state, city });
+
+    // declaring goToPageButton element
+    const goToPageButton = document.getElementById('goToPageButton');
+
+    // generate url
+    if (city) { // check if city has a value
+        url = `./pages/${continent}/${country}/${state}/${city}.html`; // f string for url
+        goToPageButton.disabled = false; // enable the button 
+        console.log("Generated URL:", url); // debugging
+
+    }
+    else {
+        url =  null; // set url to null if city is empty
+        goToPageButton.disabled = true; // disable the button
+        console.log("Generated URL:", url); // debugging
+
+    }
+
+
+    
+    // add event listener to listen to when the button gets pressed
+    if (goToPageButton) {
+        goToPageButton.onclick = () => {
+            window.location.href = url; // url action
+        };
+    } else {
+        console.error('Go To Page Button element not found!');
+    }
+
+}
+
+// completely update the map
+function updateMap() {
+    const city = document.getElementById('city-dropdown').value; // update based on city
+    const coords = data.coordinates[city]; // pull coords from dataset
+    if (coords) {
+        view.setCenter(ol.proj.fromLonLat(coords)); // set view to coords
+        view.setZoom(9); // zoom out
+    }
+    updateLink(); // call update button link function
+
+}
+
+// update countries function
 function updateCountries() {
     const continent = document.getElementById('continent-dropdown').value;
-    populateDropdown('country-dropdown', data.countries[continent] || []);
-    updateStates(); // Clear lower-level dropdowns
+    populateDropdown('country-dropdown', data.countries[continent] || [], "Select Country");
+    updateStates(); // update states dropdown
 }
 
+// update states function
 function updateStates() {
     const country = document.getElementById('country-dropdown').value;
-    populateDropdown('state-dropdown', data.states[country] || []);
-    updateCities(); // Clear lower-level dropdowns
+    populateDropdown('state-dropdown', data.states[country] || [], "Select State/Region");
+    updateCities(); // update cities dropdown
 }
 
+// update cities function
 function updateCities() {
     const state = document.getElementById('state-dropdown').value;
-    populateDropdown('city-dropdown', data.cities[state] || []);
-    updateMap(); // Clear lower-level dropdowns
-}
+    populateDropdown('city-dropdown', data.cities[state] || [], "Select City");
+    updateMap(); // update map
 
-function updateMap() {
-    const city = document.getElementById('city-dropdown').value;
-    const coords = data.coordinates[city];
-    if (coords) {
-        view.setCenter(ol.proj.fromLonLat(coords));
-        view.setZoom(10); // Adjust zoom level as needed
-    }
+
+
+
+
 }

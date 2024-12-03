@@ -5,25 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Map with OpenLayers</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.20.1/ol.css" type="text/css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="mapPage.css">
 </head>
 <body>
     <div class="dropdown-container">
-        <select id="continent-dropdown" onchange="updateCountries()">
-            <!-- Continent options will be populated dynamically -->
+        <select id="continent-dropdown" class="homePageDropdown" onchange="updateCountries()">
+            <!-- sontinents dynamically populate -->
         </select>
-        <select id="country-dropdown" onchange="updateStates()">
-            <!-- Country options will be populated dynamically -->
+        <select id="country-dropdown" class="homePageDropdown" onchange="updateStates()">
+            <!-- countries dynamically populate -->
         </select>
-        <select id="state-dropdown" onchange="updateCities()">
-            <!-- State options will be populated dynamically -->
+        <select id="state-dropdown" class="homePageDropdown" onchange="updateCities()">
+            <!-- states/regions dynamically populate -->
         </select>
-        <select id="city-dropdown" onchange="updateMap()">
-            <!-- City options will be populated dynamically -->
+        <select id="city-dropdown" class="homePageDropdown" onchange="updateMap()">
+            <!-- cities dynalically populate -->
         </select>
-        <div id="map" class="map"></div>
+
+        <button id="goToPageButton">Go</button>
+
+
+        <div id="map"></div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.20.1/ol.js"></script>
-    <script src="script.js"></script>
+    <script src="mapMethod.js"></script>
 </body>
 </html>
