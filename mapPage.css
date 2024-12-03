@@ -16,6 +16,8 @@ body {
 }
 
 select {
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
     position: relative;
     left: 0px;
     top: 20%;
@@ -35,8 +37,11 @@ select {
 }
 
 #goToPageButton {
+    font-family: 'Roboto';
+    font-size: large;
+    font-weight: bold;
     width: 50px;
-    height: 50px;
+    height: 25px;
     position: relative;
     left: 75px;
     top: 20%;
