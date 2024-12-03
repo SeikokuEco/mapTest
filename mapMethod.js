@@ -1041,7 +1041,7 @@ function updateLink() {
 
     // generate url
     if (city) { // check if city has a value
-        url = `./pages/${continent}/${country}/${state}/${city}.html`; // f string for url
+        url = `./pages/${continent}/${country}/${state}/${city}/${city}.html`; // f string for url
         goToPageButton.disabled = false; // enable the button 
         console.log("Generated URL:", url); // debugging
 
