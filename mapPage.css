@@ -27,9 +27,9 @@ select {
 }
 
 #map {
-    position: absolute;
-    right: 650px;
-    bottom: 30%;
+    position: relative;
+    left: 200px;
+    bottom: 40%;
     width: 600px;
     height: 450px;
     border: 1px solid #ccc;
